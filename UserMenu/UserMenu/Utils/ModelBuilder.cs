@@ -3,9 +3,9 @@ using UserMenu.Models;
 
 namespace UserMenu.Utils
 {
-    public class ModelBuilder
+    public class ModelBuilder : IModelBuilder
     {
-        public static List<MenuItem> GetMenuItems(string[] rawMenuItems)
+        public List<MenuItem> GetMenuItems(string[] rawMenuItems)
         {
             List<MenuItem> menuItems = new List<MenuItem>();
 
@@ -17,17 +17,17 @@ namespace UserMenu.Utils
 
                     if (parts.Length != 2)
                     {
-                        throw new ArgumentException($"wrong format: '{item}'. Expected format: <int>,<name>");
+                        throw new ArgumentException("wrong format: Expected format: <int>,<name>");
                     }
 
                     if (!int.TryParse(parts[0], out int id))
                     {
-                        throw new ArgumentException($"Invalid ID '{parts[0]}' in line: '{item}'. ID should be an integer.");
+                        throw new ArgumentException("Invalid ID. ID should be an integer.");
                     }
 
                     if (string.IsNullOrWhiteSpace(parts[1]))
                     {
-                        throw new ArgumentException($"Invalid name '{parts[1]}' in line: '{item}'. Name should not be empty.");
+                        throw new ArgumentException("Invalid name. Name should not be empty.");
                     }
 
                     menuItems.Add(new MenuItem(id, parts[1].Trim()));
@@ -47,7 +47,7 @@ namespace UserMenu.Utils
             return menuItems;
         }
 
-        public static List<User> GetUsers(string[] rawUsers, List<MenuItem> menuItems)
+        public List<User> GetUsers(string[] rawUsers, List<MenuItem> menuItems)
         {
             List<User> users = new List<User>();
             try
@@ -60,7 +60,7 @@ namespace UserMenu.Utils
                     {
                         if (!(parts[1].Trim().All(c => char.ToLowerInvariant(c) == 'y' || char.ToLowerInvariant(c) == 'n')))
                         {
-                            throw new ArgumentException($"Invalid permissions format: '{user}'. Permissions should be either a 'y' or a 'n' ");
+                            throw new ArgumentException("Invalid permissions format: Permissions should be either a 'y' or a 'n' ");
                         }
                         permissions += parts[i].Trim();
                     }
@@ -82,13 +82,13 @@ namespace UserMenu.Utils
             return users;
         }
 
-        public static string[] GetUserPermissionIndices(string permissions, List<MenuItem> menuItems)
+        public string[] GetUserPermissionIndices(string permissions, List<MenuItem> menuItems)
         {
             permissions = new string(permissions.Where(c => !char.IsWhiteSpace(c)).ToArray());
 
             if (permissions.Length != menuItems.Count)
             {
-                throw new ArgumentException($"Invalid permissions length: '{permissions}'. Expected length should be the same as the number of many items: {menuItems.Count}");
+                throw new ArgumentException("Invalid permissions length: Expected length should be the same as the number of menu items");
             }
 
             List<string> enabledIPermissions = new List<string>();

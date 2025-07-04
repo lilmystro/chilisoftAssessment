@@ -4,18 +4,25 @@ using UserMenu.Utils;
 
 namespace UserMenu.Presentation
 {
-    public class App
+    public class App : IApp
     {
-        public static void GenerateUserMenuPermissions(string[] args)
+        private readonly IModelBuilder _modelBuilder;
+        private readonly IFileReader _fileReader;
+
+        public App(IModelBuilder modelBuilder, IFileReader fileReader)
         {
-            // Declare variables
+            _modelBuilder = modelBuilder;
+            _fileReader = fileReader;
+        }
+        public void GenerateUserMenuPermissions(string[] args)
+        {
             string[] rawMenuItems;
             string[] rawUsers;
 
-            (rawUsers, rawMenuItems) = FileReader.ReadLinesFromFile(args);
-
-            List<MenuItem> menuItems = ModelBuilder.GetMenuItems(rawMenuItems);
-            List<User> users = ModelBuilder.GetUsers(rawUsers, menuItems);
+            (rawUsers, rawMenuItems) = _fileReader.ReadLinesFromFile(args);
+            
+            List<MenuItem> menuItems = _modelBuilder.GetMenuItems(rawMenuItems);
+            List<User> users = _modelBuilder.GetUsers(rawUsers, menuItems);
             JsonWriter.WriteToJson(users);
         }
     }

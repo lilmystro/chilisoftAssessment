@@ -1,11 +1,17 @@
 ﻿
 namespace UserMenu.Utils
 {
-    public class FileReader
+    public class FileReader: IFileReader
     {
-        public static (string[], string[]) ReadLinesFromFile(string[] args)
-        {
+        private readonly IFileSystem _fileSystem;
 
+        public FileReader(IFileSystem fileSystem)
+        {
+            _fileSystem = fileSystem;
+        }
+
+        public (string[], string[]) ReadLinesFromFile(string[] args)
+        {
             try
             {
                 if (args.Length != 2)
@@ -17,10 +23,10 @@ namespace UserMenu.Utils
                 if (!(args[1].Contains("menus.txt")))
                     throw new ArgumentException("The second argument must be the path to the menus file");
 
-                if (!File.Exists(args[0]) || !File.Exists(args[1]))
-                    throw new FileNotFoundException("One or both of the specified files do not exist or have the wrong path");
+                if (!_fileSystem.Exists(args[0]) || !_fileSystem.Exists(args[1]))
+                    throw new ArgumentException("One or both of the specified files do not exist or have the wrong path");
 
-                return (File.ReadAllLines(args[0]), File.ReadAllLines(args[1]));
+                return (_fileSystem.ReadAllLines(args[0]), _fileSystem.ReadAllLines(args[1]));
             }
             catch (Exception e)
             {
