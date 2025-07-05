@@ -23,8 +23,8 @@ namespace UserMenu.Presentation
 
             (rawUsers, rawMenuItems) = _fileReader.ReadLinesFromFile(args);
             
-            List<MenuItem> menuItems = _modelBuilder.GetMenuItems(rawMenuItems);
-            List<User> users = _modelBuilder.GetUsers(rawUsers, menuItems);
+            var menuItems = _modelBuilder.GetMenuItems(rawMenuItems);
+            var users = _modelBuilder.GetUsers(rawUsers, menuItems);
             _jsonWriter.WriteToJson(users);
         }
     }

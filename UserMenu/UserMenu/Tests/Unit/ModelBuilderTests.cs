@@ -103,7 +103,9 @@ namespace UserMenu.Tests.Unit
                 new MenuItem(2, "Menu2")
             };
             // Act
+
             var ex = Assert.Throws<Exception>(() => modelBuilder.GetUsers(userPermisions, menuItems));
+
             // Assert
             Assert.That(ex?.Message, Is.EqualTo("Error processing user permissions: Invalid permissions length: Expected length should be the same as the number of menu items"));
         }

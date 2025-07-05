@@ -47,8 +47,10 @@ namespace UserMenu.Tests.Unit
             mockFileSystem.Exists(Arg.Any<string>()).Returns(false);
             var reader = new FileReader(mockFileSystem);
             string[] args = { "users.txt", "menus.txt" };
+
             // Act
             var ex = Assert.Throws<Exception>(() => reader.ReadLinesFromFile(args));
+
             // Assert
             Assert.That(ex?.Message, Is.EqualTo("Error reading files: One or both of the specified files do not exist or have the wrong path"));
         }

@@ -52,10 +52,10 @@ namespace UserMenu.Utils
             List<User> users = new List<User>();
             try
             {
-                foreach (string user in rawUsers)
+                foreach (var user in rawUsers)
                 {
-                    string[] parts = user.Split(' ');
-                    string permissions = "";
+                    var parts = user.Split(' ');
+                    var permissions = "";
                     for (int i = 1; i < parts.Length; i++)
                     {
                         if (!(parts[1].Trim().All(c => char.ToLowerInvariant(c) == 'y' || char.ToLowerInvariant(c) == 'n')))

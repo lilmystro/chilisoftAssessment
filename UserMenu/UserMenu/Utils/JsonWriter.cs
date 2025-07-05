@@ -15,12 +15,10 @@ namespace UserMenu.Utils
 
         public void WriteToJson(List<User> users)
         {
-            Users userList = new Users(users);
+            var userList = new Users(users);
 
-            // Convert the list of users to JSON format
-            string json = _consoleJsonSerializer.Serialize(userList);
+            var json = _consoleJsonSerializer.Serialize(userList);
 
-            // write json string to Console
             Console.WriteLine(json);
         }
     }
