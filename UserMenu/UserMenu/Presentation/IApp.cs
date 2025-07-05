@@ -1,7 +1,7 @@
 ﻿
 namespace UserMenu.Presentation
 {
-    internal interface IApp
+    public interface IApp
     {
         void GenerateUserMenuPermissions(string[] args);
     }
