@@ -8,11 +8,13 @@ namespace UserMenu.Presentation
     {
         private readonly IModelBuilder _modelBuilder;
         private readonly IFileReader _fileReader;
+        private readonly IJsonWriter _jsonWriter;
 
-        public App(IModelBuilder modelBuilder, IFileReader fileReader)
+        public App(IModelBuilder modelBuilder, IFileReader fileReader, IJsonWriter jsonWriter)
         {
             _modelBuilder = modelBuilder;
             _fileReader = fileReader;
+            _jsonWriter = jsonWriter;
         }
         public void GenerateUserMenuPermissions(string[] args)
         {
@@ -23,7 +25,7 @@ namespace UserMenu.Presentation
             
             List<MenuItem> menuItems = _modelBuilder.GetMenuItems(rawMenuItems);
             List<User> users = _modelBuilder.GetUsers(rawUsers, menuItems);
-            JsonWriter.WriteToJson(users);
+            _jsonWriter.WriteToJson(users);
         }
     }
 }

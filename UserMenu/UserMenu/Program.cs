@@ -21,6 +21,8 @@ public class Program
         services.AddTransient<IModelBuilder, ModelBuilder>();
         services.AddTransient<IFileSystem, FileSystem>();
         services.AddTransient<IFileReader, FileReader>();
+        services.AddTransient<IJsonWriter, JsonWriter>();
+        services.AddTransient<IConsoleJsonSerializer, ConsoleJsonSerializer>();
 
         return services.BuildServiceProvider();
     }

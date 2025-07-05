@@ -1,17 +1,25 @@
 ﻿
+using System.Text.Json;
 using UserMenu.Models;
 
 namespace UserMenu.Utils
 {
-    public class JsonWriter
+    public class JsonWriter : IJsonWriter
     {
-        public static void WriteToJson(List<User> users)
+        private readonly IConsoleJsonSerializer _consoleJsonSerializer;
+
+        public JsonWriter(IConsoleJsonSerializer consoleJsonSerializer)
+        {
+            _consoleJsonSerializer = consoleJsonSerializer;
+        }
+
+        public void WriteToJson(List<User> users)
         {
             Users userList = new Users(users);
 
             // Convert the list of users to JSON format
-            string json = System.Text.Json.JsonSerializer.Serialize(userList, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
-          
+            string json = _consoleJsonSerializer.Serialize(userList);
+
             // write json string to Console
             Console.WriteLine(json);
         }
